@@ -1,0 +1,22 @@
+#lang sicp
+(define (rand-init) 2)
+(define (rand-update x) (* x x))
+
+(define rand (let ((x (rand-init)))
+                (lambda (msg)
+                    (cond   ((eq? msg 'generate) 
+                            (begin (set! x (rand-update x))
+                                    x))
+                            ((eq? msg 'reset) 
+                                (lambda (new-val)
+                                    (begin  (set! x new-val)
+                                            (display "The value is reset to ")
+                                            (display new-val)
+                                            (newline))))))))
+(rand 'generate)
+(rand 'generate)
+((rand 'reset) 3)
+(rand 'generate)
+(rand 'generate)
+(rand 'generate)
+

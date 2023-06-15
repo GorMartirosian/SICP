@@ -1,0 +1,10 @@
+#lang sicp
+(define (square x) (* x x))
+(define (sum-of-squares a b)(+ (square a) (square b)))
+(define (f a b c)
+    (if (and (> a b) (> c b))
+        (sum-of-squares a c)
+        (if (and (> a c) (> b c))
+            (sum-of-squares a b)
+            (sum-of-squares b c))))
+(f 1 4 3)
