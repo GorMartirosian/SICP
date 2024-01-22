@@ -801,3 +801,20 @@
               ((eq? op 'angle) ang)
               (else (error "Unknown op: " op))))
     dispatch)
+
+;;Ex. 2.78
+(define (type-tag datum)
+    (cond ((number? datum) 'scheme-number)
+          ((pair? datum) (car datum))
+          (else (error "Datum does not have a tag!" datum ))))
+
+(define (attach-tag tag contents)
+    (cond ((number? contents) contents)
+          (else (cons tag contents))))
+
+(define (contents datum)
+    (cond ((number? datum) datum)
+          ((pair? datum) (car datum))
+          (else (error "Cannot invoke procedure 'contents' for " datum))))
+
+((lambda (x) 1) 10)
