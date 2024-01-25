@@ -817,4 +817,3 @@
           ((pair? datum) (car datum))
           (else (error "Cannot invoke procedure 'contents' for " datum))))
 
-((lambda (x) 1) 10)
