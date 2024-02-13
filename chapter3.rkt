@@ -59,3 +59,65 @@
                     (begin (set! a -1)
                            0)
                     (+ a x)))))
+
+;;Ex. 3.17
+(define (count-pairs x)
+    (let ((checked-cells '()))
+        (define (helper x)
+            (cond ((not (pair? x)) 0)
+                  ((memq x checked-cells) 0)
+                  (else (set! checked-cells (cons x checked-cells))
+                        (+ 1
+                           (helper (car x))
+                           (helper (cdr x))))))
+        (define (contains? elm cells)
+            (cond ((null? cells) false)
+                  ((eq? elm (car cells)) true)
+                  (else (contains? elm (cdr cells)))))
+        (helper x)))
+
+(define (last-pair x)
+    (cond ((null? x) '())
+          ((null? (cdr x)) x)
+          (else (last-pair (cdr x)))))
+
+(define w (list 1 2 3))
+(set-cdr! (last-pair w) (cdr w))
+
+;;Ex. 3.18
+(define (has-loop? l)
+    (let ((checked-cells '()))
+        (define (helper node)
+            (cond ((not (pair? node)) false)
+                  ((memq node checked-cells) true)
+                  (else (set! checked-cells (cons node checked-cells))
+                        (helper (cdr node)))))
+        (helper l)))
+
+;;Ex. 3.19
+(define (contains-cycle? lst) 
+   (define (safe-cdr l) 
+     (if (pair? l) 
+         (cdr l) 
+         '())) 
+   (define (iter a b) 
+     (cond ;((not (pair? a)) #f) 
+           ((not (pair? b)) #f) 
+           ((eq? a b) #t) 
+           ;((eq? a (safe-cdr b)) #t) 
+           (else (iter (safe-cdr a) (safe-cdr (safe-cdr b)))))) 
+   (iter lst (safe-cdr lst))) 
+  
+  
+ ; Tested with mzscheme implementation of R5RS: 
+ (define x '(1 2 3 4 5 6 7 8)) 
+ (define y '(1 2 3 4 5 6 7 8)) 
+ (set-cdr! (cdddr (cddddr y)) (cdddr y)) 
+ (define z '(1)) 
+ (set-cdr! z z) 
+ x ; (1 2 3 4 5 6 7 8) 
+ y ; (1 2 3 . #0=(4 5 6 7 8 . #0#)) 
+ z ; #0=(1 . #0#) 
+ (contains-cycle? x) ; #f 
+ (contains-cycle? y) ; #t 
+ (contains-cycle? z) ; #t 
