@@ -14,8 +14,3 @@
         (let ((first (eval (car exps) env)))
             (cons first
                   (list-of-values-l (cdr exps) env)))))
-
-
-(define x 10)
-(list-of-values-l '((set! x 20) 31 32 (set! x 2222)) )
-x
