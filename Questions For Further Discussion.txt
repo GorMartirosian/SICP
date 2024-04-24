@@ -1,0 +1,10 @@
+3.41
+
+The answer to this question depends on the particular machine. Accessing balance is an atomic operation, but there is an issue in case the first process accesses the balance during the concurrent execution of deposit/withdraw (more precisely the set! operation inside them). If the primitive set! is not atomic operation and another process accesses the balance simultaneously, the balance could be corrupted.
+
+3.43
+
+I think even in case of the first exchange program the sum of the balances do not necessarily maintain the same number.
+For instance, starting with 100,30,200 -> 30,100,100.
+
+4.26!!! When should unless be a lazy function and not a special form?
